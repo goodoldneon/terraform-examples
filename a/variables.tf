@@ -10,6 +10,10 @@ variable "aws_key_path" {
   default = "/Users/aaron/.ssh/aws"
 }
 
+variable "aws_key_name" {
+  default = "aws"
+}
+
 variable "vpc_cidr" {
   description = "CIDR for the whole VPC"
   default     = "10.0.0.0/16"

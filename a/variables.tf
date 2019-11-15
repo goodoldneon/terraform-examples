@@ -2,8 +2,11 @@ variable "region" {
   default = "us-east-2"
 }
 
-variable "ami" {
-  default = "ami-3ec9fd5b"
+variable "amis" {
+  type = "map"
+  default = {
+    us-east-2 = "ami-3ec9fd5b"
+  }
 }
 
 variable "aws_key_path" {

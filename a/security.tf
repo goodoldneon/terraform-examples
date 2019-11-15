@@ -7,7 +7,7 @@ resource "aws_security_group" "bastion" {
     protocol    = "tcp"
     from_port   = 22
     to_port     = 22
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.all_cidr}"]
   }
 
   # Ping
@@ -23,7 +23,7 @@ resource "aws_security_group" "bastion" {
     protocol    = -1
     from_port   = 0
     to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.all_cidr}"]
   }
 
   tags = {
@@ -31,18 +31,19 @@ resource "aws_security_group" "bastion" {
   }
 }
 
-resource "aws_security_group" "nat" {
-  name        = "nat"
-  description = "Allow traffic to pass between the private subnet and the internet"
-  vpc_id      = "${aws_vpc.default.id}"
+resource "aws_security_group" "private" {
+  name   = "private"
+  vpc_id = "${aws_vpc.default.id}"
 
+  # SSH
   ingress {
+    protocol    = "tcp"
     from_port   = 22
     to_port     = 22
-    protocol    = "tcp"
     cidr_blocks = ["${var.all_cidr}"]
   }
 
+  # Ping
   ingress {
     from_port   = -1
     to_port     = -1
@@ -50,35 +51,15 @@ resource "aws_security_group" "nat" {
     cidr_blocks = ["${var.all_cidr}"]
   }
 
+  # All
   egress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["${var.all_cidr}"]
-  }
-
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["${var.all_cidr}"]
-  }
-
-  egress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["${var.vpc_cidr}"]
-  }
-
-  egress {
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
+    protocol    = -1
+    from_port   = 0
+    to_port     = 0
     cidr_blocks = ["${var.all_cidr}"]
   }
 
   tags = {
-    Name = "nat"
+    Name = "private"
   }
 }

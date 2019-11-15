@@ -1,9 +1,1 @@
-```
-          ┌──VPC───────────────────────┐
-          │               ┌──Subnet──┐ │
-          │               │          │ │
-Internet <-> NAT Gateway <-> EC2     │ │
-          │               │          │ │
-          │               └──────────┘ │ 
-          └────────────────────────────┘
-```
+Can only SSH into the private instance via the bastion.

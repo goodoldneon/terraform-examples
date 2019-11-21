@@ -1,5 +1,4 @@
 resource "aws_security_group" "allow-ssh" {
-  vpc_id      = "${aws_vpc.main.id}"
   name        = "allow-ssh"
   description = "security group that allows ssh and all egress traffic"
 
@@ -16,6 +15,8 @@ resource "aws_security_group" "allow-ssh" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  vpc_id = "${aws_vpc.main.id}"
 
   tags = {
     Name = "allow-ssh"

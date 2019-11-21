@@ -8,11 +8,11 @@ resource "aws_launch_configuration" "example" {
 }
 
 resource "aws_autoscaling_group" "example" {
-  name                      = "example"
+  name_prefix               = "terraform-asg-"
+  max_size                  = 1
+  min_size                  = 1
   vpc_zone_identifier       = "${aws_subnet.public.*.id}"
   launch_configuration      = "${aws_launch_configuration.example.name}"
-  min_size                  = 1
-  max_size                  = 1
   health_check_grace_period = 300
   health_check_type         = "EC2"
   force_delete              = true

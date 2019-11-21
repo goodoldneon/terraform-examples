@@ -4,6 +4,11 @@
   - Add an instance if CPU >= 30% for 60 seconds.
   - Remove an instance if CPU <= 5% for 60 seconds.
 
+## Warnings
+
+- Probably don't use this example's values for `aws_cloudwatch_metric_alarm` `evaluation_periods` and `period`.
+- Probably don't use this example's values for `aws_autoscaling_group` `min` and `max`.
+
 ## Before You Start
 
 - AWS CLI is configured.

@@ -2,7 +2,7 @@ resource "aws_launch_configuration" "web" {
   name_prefix     = "terraform-lc-"
   image_id        = "${lookup(var.amis, var.region)}"
   instance_type   = "t2.micro"
-  security_groups = ["${aws_security_group.web.id}"]
+  security_groups = ["${aws_security_group.instance.id}"]
 
   user_data = <<-EOF
               #!/bin/bash

@@ -20,8 +20,8 @@ resource "aws_security_group" "elb" {
   }
 }
 
-resource "aws_security_group" "web" {
-  name = "web"
+resource "aws_security_group" "instance" {
+  name = "instance"
 
   ingress {
     from_port   = 8080

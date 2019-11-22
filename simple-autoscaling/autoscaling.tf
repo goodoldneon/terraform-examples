@@ -1,6 +1,6 @@
 # EC2 instance that the ASG will start
 resource "aws_launch_configuration" "example" {
-  name_prefix     = "terraform-lc-"
+  name_prefix     = "example-"
   image_id        = "${lookup(var.amis, var.region)}"
   instance_type   = "t2.micro"
   key_name        = "${aws_key_pair.example.key_name}"
@@ -8,18 +8,13 @@ resource "aws_launch_configuration" "example" {
 }
 
 resource "aws_autoscaling_group" "example" {
-  name_prefix               = "terraform-asg-"
-  max_size                  = 1
+  name_prefix               = "example-"
+  max_size                  = 2
   min_size                  = 1
   vpc_zone_identifier       = "${aws_subnet.public.*.id}"
   launch_configuration      = "${aws_launch_configuration.example.name}"
-  health_check_grace_period = 300
   health_check_type         = "EC2"
-  force_delete              = true
 
-  tag {
-    key                 = "Name"
-    value               = "example"
-    propagate_at_launch = true
-  }
+  # Allow deletion without draining instances.
+  force_delete              = true
 }

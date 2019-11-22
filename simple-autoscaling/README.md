@@ -23,8 +23,8 @@
 1. Run `ssh ubuntu@<instance-ip>` to SSH into the instance.
 1. Run `sudo apt-get install stress` to install `stress`.
 1. Run `stress --cpu 2 timeout 300` to add CPU load.
-1. Browse to CloudWatch in your AWS console. You should eventually see the `example-cpu-scaleup` alarm.
-1. Browse to EC2 in your AWS console. You should eventually see the 2nd EC2 instance.
+1. Browse to CloudWatch in your AWS console. Within a few minutes, you should see the `example-cpu-scaleup` alarm.
+1. Browse to Auto Scaling Groups in your AWS console. Within a few minutes, you should see the "desired" instance count change to 2. Soon after, the "instances" count should change to 2.
 1. Stop `stress` in the 1st EC2 instance.
 1. Browse to CloudWatch in your AWS console. You should eventually see the `example-cpu-scaledown` alarm.
-1. Browse to EC2 in your AWS console. The 2nd EC2 instance should eventually terminate.
+1. Browse to Auto Scaling Groups in your AWS console. Within a few minutes, you should see the desired instance count change to 1. Soon after, the instances count should change to 1.

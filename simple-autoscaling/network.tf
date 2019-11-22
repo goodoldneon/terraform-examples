@@ -4,7 +4,15 @@ resource "aws_vpc" "main" {
   instance_tenancy     = "default"
   enable_dns_support   = true
   enable_dns_hostnames = true
-  enable_classiclink   = false
+
+  tags = {
+    Name = "main"
+  }
+}
+
+# Gateway
+resource "aws_internet_gateway" "main" {
+  vpc_id = "${aws_vpc.main.id}"
 
   tags = {
     Name = "main"
@@ -24,29 +32,7 @@ resource "aws_subnet" "public" {
   }
 }
 
-# Private subnets (1 per AZ)
-resource "aws_subnet" "private" {
-  count                   = "${length(data.aws_availability_zones.all.names)}"
-  availability_zone       = "${element(data.aws_availability_zones.all.names, count.index)}"
-  cidr_block              = "10.0.${length(aws_subnet.public) + count.index + 1}.0/24"
-  map_public_ip_on_launch = false
-  vpc_id                  = "${aws_vpc.main.id}"
-
-  tags = {
-    Name = "private-${count.index + 1}"
-  }
-}
-
-# Gateway
-resource "aws_internet_gateway" "main" {
-  vpc_id = "${aws_vpc.main.id}"
-
-  tags = {
-    Name = "main"
-  }
-}
-
-# Public route table
+# Public routing table
 resource "aws_route_table" "public" {
   vpc_id = "${aws_vpc.main.id}"
 
@@ -60,7 +46,7 @@ resource "aws_route_table" "public" {
   }
 }
 
-# Public route associations
+# Associate public subnets with the public routing table
 resource "aws_route_table_association" "public" {
   count          = "${length(aws_subnet.public)}"
   subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"

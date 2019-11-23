@@ -1,6 +1,6 @@
 resource "aws_security_group" "allow_ssh" {
   name   = "allow_ssh"
-  vpc_id = "${aws_vpc.default.id}"
+  vpc_id = "${aws_vpc.main.id}"
 
   ingress {
     cidr_blocks = ["0.0.0.0/0"]

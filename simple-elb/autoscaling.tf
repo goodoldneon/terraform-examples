@@ -1,6 +1,6 @@
 resource "aws_autoscaling_group" "example" {
   name_prefix          = "example-"
-  max_size             = 10
+  max_size             = 2
   min_size             = 2
   availability_zones   = "${data.aws_availability_zones.all.names}"
   launch_configuration = "${aws_launch_configuration.example.id}"

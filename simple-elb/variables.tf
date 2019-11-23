@@ -1,13 +1,17 @@
+variable "profile" {
+  type    = "string"
+  default = "default"
+}
+
 variable "region" {
   type    = "string"
-  default = "us-east-2"
+  default = "us-east-1"
 }
 
 variable "amis" {
   type = "map"
 
   default = {
-    us-east-2 = "ami-eee2b98b"
-    us-west-1 = "ami-84423ae4"
+    us-east-1 = "ami-b3425cc9"
   }
 }
